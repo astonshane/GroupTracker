@@ -7,23 +7,37 @@
     <div class="container">
         <p></p>
         <div class="row">
-            <h1>{{project.name}}</h1>
-            <h2>Public Events ({{events|length}})</h2>
+            <h1>{{project.name}} {% if project.RCOS %}<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>{% endif%}</h1>
+            {% if project.RCOS %}
+            <div class="col-md-4">
+                <h2>Project Members</h2>
+                <div class="list-group">
+                    {% for member in project.users %}
+                        <a href="/user/{{member.github}}" class="list-group-item">{{member.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-md-8">
+            {% else %}
+            <div class="col-md-12">
+            {% endif %}
+                <h2>Public Events ({{events|length}})</h2>
 
-            <table class="table table-striped">
-                <tr>
-                    <th>Type</th>
-                    <th>User</th>
-                    <th>Date</th>
-                </tr>
-                {%for event in events%}
+                <table class="table table-striped">
                     <tr>
-                        <td>{{event.type}}</td>
-                        <td><a href="/user/{{event.user}}">{{event.user}}</a></td>
-                        <td>{{event.date}}</td>
+                        <th>Type</th>
+                        <th>User</th>
+                        <th>Date</th>
                     </tr>
-                {% endfor%}
-            </table>
+                    {%for event in events%}
+                        <tr>
+                            <td>{{event.type}}</td>
+                            <td><a href="/user/{{event.user}}">{{event.user}}</a></td>
+                            <td>{{event.date}}</td>
+                        </tr>
+                    {% endfor%}
+                </table>
+            </div>
         </div>
     </div>
 {% endblock %}

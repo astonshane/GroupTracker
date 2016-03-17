@@ -26,9 +26,22 @@ def parseGroups():
 def getUser(username):
     data = json.loads(open('smallgroup.json').read())
     for user in data.get("users", {}):
-        if user['github'] == username:
+        if user['github'].lower() == username.lower():
             return user
     return None
+
+
+def getProject(projectname):
+    data = json.loads(open('smallgroup.json').read())
+
+    project = {"name": projectname, "RCOS": False, "users": []}
+
+    for user in data.get("users", {}):
+        if user['project'].lower() == projectname.lower():
+            project['users'].append(user)
+            project['RCOS'] = True
+
+    return project
 
 
 @app.route("/")
@@ -70,8 +83,8 @@ def user(username):
 
 @app.route("/project/<user>/<repo>")
 def project(user, repo):
-    project = {}
-    project['name'] = repo
+    project = getProject("%s/%s" % (user, repo))
+    pprint(project)
     events = []
 
     data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
