@@ -8,10 +8,33 @@
         <p></p>
         <div class="row">
             <div class="col-md-3">
-                test
+                <div class="row">
+                    <img src="{{user.pic}}" height=200 width=200></img>
+                </div>
+                <div class="row">
+                    {{user.name}}
+                </div>
+                <div class="row">
+                    {{user.email}}
+                </div>
             </div>
             <div class="col-md-9">
-                test longer
+                <h2>Public Events ({{events|length}})</h2>
+
+                <table class="table table-striped">
+                    <tr>
+                        <th>Type</th>
+                        <th>repo</th>
+                        <th>Date</th>
+                    </tr>
+                    {%for event in events%}
+                        <tr>
+                            <td>{{event.type}}</td>
+                            <td><a href="/project/{{event.repo}}">{{event.repo}}</a></td>
+                            <td>{{event.date}}</td>
+                        </tr>
+                    {% endfor%}
+                </table>
             </div>
         </div>
     </div>
