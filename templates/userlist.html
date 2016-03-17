@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block title %}Small Group Tracker{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <p></p>
+        <div class="row">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Github</th>
+                    <th>Project</th>
+                </tr>
+                {%for user in g.users%}
+                    <tr>
+                        <td>{{user['name']}}</td>
+                        <td><a href="mailto:{{user['email']}}">{{user['email']}}</a></td>
+                        <td><a href="/user/{{user['github']}}">{{user['github']}}</td>
+                        <td><a href="/project/{{user['project']}}">{{user['project']}}</td>
+                    </tr>
+                {% endfor%}
+            </table>
+        </div>
+    </div>
+{% endblock %}
