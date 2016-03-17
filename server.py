@@ -63,7 +63,18 @@ def user(username):
 
 @app.route("/project/<user>/<repo>")
 def project(user, repo):
-    return render_template("project.html")
+    events = []
+
+    data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
+
+    for event in data:
+        event_obj = {}
+        event_obj['type'] = event['type']
+        event_obj['user'] = event['actor']['login']
+        event_obj['date'] = event['created_at']
+        events.append(event_obj)
+
+    return render_template("project.html", project=repo, events=events)
 
 if __name__ == "__main__":
     app.run(debug=True)
