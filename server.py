@@ -39,15 +39,22 @@ def users():
 
 @app.route("/user/<username>")
 def user(username):
-    user_obj = getUser(username)
-    if user_obj is None:
-        abort(404)
 
     data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events' % username).read())
 
-    user_obj['pic'] = "https://acrobatusers.com/assets/images/template/author_generic.jpg"
-    if len(data) > 0:
-        user_obj['pic'] = data[0]['actor']['avatar_url']
+    if len(data) == 0:
+        abort(404)
+
+    user_obj = getUser(username)
+    if user_obj is None:
+        user_obj = {}
+        user_obj['RCOS'] = False
+        user_obj['name'] = data[0]['actor']['login']
+        user_obj['github'] = data[0]['actor']['login']
+    else:
+        user_obj['RCOS'] = True
+
+    user_obj['pic'] = data[0]['actor']['avatar_url']
 
     events = []
 
@@ -63,6 +70,8 @@ def user(username):
 
 @app.route("/project/<user>/<repo>")
 def project(user, repo):
+    project = {}
+    project['name'] = repo
     events = []
 
     data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
@@ -74,7 +83,7 @@ def project(user, repo):
         event_obj['date'] = event['created_at']
         events.append(event_obj)
 
-    return render_template("project.html", project=repo, events=events)
+    return render_template("project.html", project=project, events=events)
 
 if __name__ == "__main__":
     app.run(debug=True)

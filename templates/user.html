@@ -12,11 +12,24 @@
                     <img src="{{user.pic}}" height=200 width=200></img>
                 </div>
                 <div class="row">
-                    {{user.name}}
+                    <h2>
+                        {{user.name}}
+                        {% if user.RCOS %}
+                            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+                        {% endif %}
+                    </h2>
                 </div>
                 <div class="row">
-                    {{user.email}}
+                    <strong>Github:</strong> <a href="http://github.com/{{user.github}}"> http://github.com/{{user.github}} </a>
                 </div>
+                {% if user.RCOS %}
+                    <div class="row">
+                        <strong>Email:</strong> {{user.email}}
+                    </div>
+                    <div class="row">
+                        <strong>Project:</strong> {{user.project}}
+                    </div>
+                {% endif %}
             </div>
             <div class="col-md-9">
                 <h2>Public Events ({{events|length}})</h2>
