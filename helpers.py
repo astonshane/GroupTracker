@@ -63,7 +63,6 @@ def getUserEvents(data):
 
         if event['type'] == "IssuesEvent":
             event_obj['detail'] = event['payload']['issue']['title']
-            event_obj['branch'] = "N/A"
 
         elif event['type'] == "PushEvent":
             event_obj['branch'] = event['payload']['ref'].split("/")[-1]
@@ -85,9 +84,13 @@ def getUserEvents(data):
             event_obj['branch'] = "%s -> %s" % (pr['head']['label'], pr['base']['label'])
             event_obj['detail'] = "<i>%s</i>: %s" % (payload['action'], pr['title'])
 
-        else:
-            event_obj['detail'] = "N/A"
-            event_obj['branch'] = "N/A"
+        elif event['type'] == "CreateEvent":
+            payload = event['payload']
+            if payload['ref_type'] == "repository":
+                event_obj['detail'] = "<i>repo:</i> %s" % event_obj['repo']
+            else:
+                event_obj['detail'] = "<i>%s:</i> %s" % (payload['ref_type'], payload['ref'])
+
 
         events.append(event_obj)
 
