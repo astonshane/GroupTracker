@@ -52,8 +52,10 @@ def users():
 
 @app.route("/user/<username>")
 def user(username):
-
-    data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events' % username).read())
+    try:
+        data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events' % username).read())
+    except:
+        abort(404)
 
     if len(data) == 0:
         abort(404)
@@ -87,7 +89,10 @@ def project(user, repo):
     pprint(project)
     events = []
 
-    data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
+    try:
+        data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
+    except:
+        abort(404)
 
     for event in data:
         event_obj = {}
@@ -97,6 +102,11 @@ def project(user, repo):
         events.append(event_obj)
 
     return render_template("project.html", project=project, events=events)
+
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
 
 if __name__ == "__main__":
     app.run(debug=True)
