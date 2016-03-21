@@ -6,24 +6,113 @@
 
     <div class="container">
         <p></p>
-        <h1>RCOS Members</h1>
         <div class="row">
-            <table class="table table-striped">
-                <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Github</th>
-                    <th>Project</th>
-                </tr>
-                {%for user in g.users%}
+            <div class="col-md-12">
+            <h1>RCOS Members</h1>
+                <table class="table table-striped">
                     <tr>
-                        <td>{{user['name']}}</td>
-                        <td><a href="mailto:{{user['email']}}">{{user['email']}}</a></td>
-                        <td><a href="/user/{{user['github']}}">{{user['github']}}</td>
-                        <td><a href="/project/{{user['project']}}">{{user['project']}}</td>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Github</th>
+                        <th>Project</th>
                     </tr>
-                {% endfor%}
-            </table>
+                    {%for user in g.users%}
+                        <tr>
+                            <td>{{user['name']}}</td>
+                            <td><a href="mailto:{{user['email']}}">{{user['email']}}</a></td>
+                            <td><a href="/user/{{user['github']}}">{{user['github']}}</td>
+                            <td><a href="/project/{{user['project']}}">{{user['project']}}</td>
+                        </tr>
+                    {% endfor%}
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <h3>Add New Member</h3>
+                <form class="form-inline" method="POST" action="/">
+                    <table class="table">
+                        <tr>
+                            <td>{{ form.fname.label }}</td>
+                            <td>{{ form.fname(class_="form-control", placeholder="Shane")}}</td>
+                            <td>
+                                {% if form.fname.errors %}
+
+                                    <ul class="errors">
+                                        {% for error in form.fname.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>{{ form.lname.label }}</td>
+                            <td>{{ form.lname(class_="form-control", placeholder="Aston")}}</td>
+                            <td>
+                                {% if form.lname.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.lname.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.email.label }}</td>
+                            <td>{{ form.email(class_="form-control", placeholder="astonshane@gmail.com")}}</td>
+                            <td>
+                                {% if form.email.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.github.label }}</td>
+                            <td>{{ form.github(class_="form-control", placeholder="astonshane")}}</td>
+                            <td>
+                                {% if form.github.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.github.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.project.label }}</td>
+                            <td>{{ form.project(class_="form-control", placeholder="astonshane/GroupTracker")}}</td>
+                            <td>
+                                {% if form.project.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.project.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                    </table>
+
+                    <input type="submit" class="btn btn-primary" value="Add User">
+                </form>
+            </div>
+        </div>
         </div>
     </div>
 {% endblock %}

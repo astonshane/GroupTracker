@@ -1,53 +1,29 @@
-from flask import Flask, render_template, g, abort
+from flask import Flask, render_template, g, abort, request, redirect
 import json
 import urllib2
 from pprint import pprint
+from forms import AddUser
+from helpers import *
 
 app = Flask(__name__)
+app.secret_key = "$UP3R$3CR3T"
 
 
-def parseGroups():
-    data = json.loads(open('smallgroup.json').read())
-
-    users = []
-    projects = set()
-
-    for user in data.get("users", {}):
-        pprint(user)
-        users.append(user)
-        projects.add(user['project'])
-
-    print users
-
-    print projects
-    return users, projects
-
-
-def getUser(username):
-    data = json.loads(open('smallgroup.json').read())
-    for user in data.get("users", {}):
-        if user['github'].lower() == username.lower():
-            return user
-    return None
-
-
-def getProject(projectname):
-    data = json.loads(open('smallgroup.json').read())
-
-    project = {"name": projectname, "RCOS": False, "users": []}
-
-    for user in data.get("users", {}):
-        if user['project'].lower() == projectname.lower():
-            project['users'].append(user)
-            project['RCOS'] = True
-
-    return project
-
-
-@app.route("/")
+@app.route("/", methods=('GET', 'POST'))
 def users():
+    form = AddUser(request.form)
+    if request.method == 'POST' and form.validate():
+        user = {
+            "name": "%s %s" % (request.form['fname'], request.form['lname']),
+            "email": request.form['email'],
+            "project": request.form['project'],
+            "github": request.form['github']
+        }
+        if insertUser(user):
+            return redirect("/")
+
     g.users, g.projects = parseGroups()
-    return render_template("userlist.html")
+    return render_template("userlist.html", form=form)
 
 
 @app.route("/user/<username>")

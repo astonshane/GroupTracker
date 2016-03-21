@@ -1,18 +1,1 @@
-{
-	"users": [{
-		"name": "Michael Hosier",
-		"email": "hosiem@rpi.edu",
-		"project": "hosier/free-of-charge",
-		"github": "hosier"
-	}, {
-		"name": "Shane Aston ",
-		"email": "astons@rpi.edu",
-		"project": "astonshane/eventsnearme",
-		"github": "astonshane"
-	}, {
-		"name": "Elaine Chao",
-		"email": "chaeo@rpi.edu",
-		"project": "astonshane/eventsnearme",
-		"github": "chao-e"
-	}]
-}
+{"users": [{"project": "hosier/free-of-charge", "github": "hosier", "name": "Michael Hosier", "email": "hosiem@rpi.edu"}, {"project": "astonshane/eventsnearme", "github": "astonshane", "name": "Shane Aston ", "email": "astons@rpi.edu"}, {"project": "astonshane/eventsnearme", "github": "chao-e", "name": "Elaine Chao", "email": "chaeo@rpi.edu"}, {"project": "sashashin/Myo-Intelligesture", "github": "toshipiazza", "name": "Toshi Piazza", "email": "piazzt@rpi.edu"}]}
