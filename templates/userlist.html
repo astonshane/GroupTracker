@@ -8,7 +8,7 @@
         <p></p>
         <div class="row">
             <div class="col-md-12">
-            <h1>RCOS Members</h1>
+            <h1>RCOS Members ({{g.users|length}})</h1>
                 <table class="table table-striped">
                     <tr>
                         <th>Name</th>
@@ -18,7 +18,7 @@
                     </tr>
                     {%for user in g.users%}
                         <tr>
-                            <td>{{user['name']}}</td>
+                            <td><a href="https://rcos.io/users/{{user['rcosio']}}/profile">{{user['name']}}</a></td>
                             <td><a href="mailto:{{user['email']}}">{{user['email']}}</a></td>
                             <td><a href="/user/{{user['github']}}">{{user['github']}}</td>
                             <td><a href="/project/{{user['project']}}">{{user['project']}}</td>
@@ -99,6 +99,21 @@
                                 {% if form.project.errors %}
                                     <ul class="errors">
                                         {% for error in form.project.errors %}
+                                            <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% else %}
+                                &nbsp;
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{ form.rcosio.label }}</td>
+                            <td>{{ form.rcosio(class_="form-control", placeholder="55e35b3bd20d829034ef0be5")}}</td>
+                            <td>
+                                {% if form.rcosio.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.rcosio.errors %}
                                             <li>{{ error }}</li>
                                         {% endfor %}
                                     </ul>

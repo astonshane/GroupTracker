@@ -1,1 +1,88 @@
-{"users": [{"project": "hosier/free-of-charge", "github": "hosier", "name": "Michael Hosier", "email": "hosiem@rpi.edu"}, {"project": "astonshane/eventsnearme", "github": "astonshane", "name": "Shane Aston ", "email": "astons@rpi.edu"}, {"project": "astonshane/eventsnearme", "github": "chao-e", "name": "Elaine Chao", "email": "chaeo@rpi.edu"}, {"project": "sashashin/Myo-Intelligesture", "github": "toshipiazza", "name": "Toshi Piazza", "email": "piazzt@rpi.edu"}]}
+{
+    "users": [
+        {
+            "email": "hosiem@rpi.edu",
+            "github": "hosier",
+            "name": "Michael Hosier",
+            "project": "hosier/free-of-charge",
+            "rcosio": "55e60539898324db13adb798"
+        },
+        {
+            "email": "astons@rpi.edu",
+            "github": "astonshane",
+            "name": "Shane Aston ",
+            "project": "astonshane/eventsnearme",
+            "rcosio": "55e35b3bd20d829034ef0be5"
+        },
+        {
+            "email": "chaeo@rpi.edu",
+            "github": "chao-e",
+            "name": "Elaine Chao",
+            "project": "astonshane/eventsnearme",
+            "rcosio": "56ae6b244bd5283e023af7b9"
+        },
+        {
+            "email": "piazzt@rpi.edu",
+            "github": "toshipiazza",
+            "name": "Toshi Piazza",
+            "project": "sashashin/Myo-Intelligesture",
+            "rcosio": "55e6052a898324db13adb794"
+        },
+        {
+            "email": "baekj@rpi.edu",
+            "github": "hydroArgentum",
+            "name": "Daniel Baek",
+            "project": "hydroArgentum/Small-Weather-Server",
+            "rcosio": "56b1280c4bd5283e023af7c5"
+        },
+        {
+            "email": "shortm2@rpi.edu",
+            "github": "galarodo",
+            "name": "Marshall Shortledge",
+            "project": "lusilva/fundo",
+            "rcosio": "56a7e3244bd5283e023af78b"
+        },
+        {
+            "email": "silval@rpi.edu",
+            "github": "lusilva",
+            "name": "Lucas Silva",
+            "project": "lusilva/fundo",
+            "rcosio": "56abd4c94bd5283e023af7b0"
+        },
+        {
+            "email": "waclas@rpi.edu",
+            "github": "seanwaclawik",
+            "name": "Sean Waclawik",
+            "project": "lusilva/fundo",
+            "rcosio": "56a7e3694bd5283e023af78d"
+        },
+        {
+            "email": "shina@rpi.edu",
+            "github": "sashashin",
+            "name": "Alex Shin",
+            "project": "sashashin/Myo-Intelligesture",
+            "rcosio": "56c7908cf168cc3448b29f22"
+        },
+        {
+            "email": "sarbos@rpi.edu",
+            "github": "sarbos",
+            "name": "Sebastian Sarbora",
+            "project": "sarbos/Neptune",
+            "rcosio": "56534b974bd5283e023af6af"
+        },
+        {
+            "email": "crossf@rpi.edu",
+            "github": "cyrozap",
+            "name": "Forest Crossman",
+            "project": "cyrozap/OpenOCD",
+            "rcosio": "56abdc664bd5283e023af7b7"
+        },
+        {
+            "email": "feldhausenryan@gmail.com",
+            "github": "feldhausenryan",
+            "name": "Ryan Feldhausen",
+            "project": "feldhausenryan/Cloud-Code",
+            "rcosio": "56ab81f34bd5283e023af79c"
+        }
+    ]
+}

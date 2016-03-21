@@ -17,7 +17,8 @@ def users():
             "name": "%s %s" % (request.form['fname'], request.form['lname']),
             "email": request.form['email'],
             "project": request.form['project'],
-            "github": request.form['github']
+            "github": request.form['github'],
+            "rcosio": request.form['rcosio']
         }
         if insertUser(user):
             return redirect("/")

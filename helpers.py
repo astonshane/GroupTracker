@@ -49,5 +49,5 @@ def insertUser(user):
     data['users'].append(user)
 
     with open('smallgroup.json', 'w') as outfile:
-        json.dump(data, outfile)
+        json.dump(data, outfile, sort_keys=True, indent=4, separators=(',', ': '))
     return True
