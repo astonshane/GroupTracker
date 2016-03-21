@@ -36,14 +36,18 @@
 
                 <table class="table table-striped">
                     <tr>
+                        <th>Repository</th>
+                        <th>Branch</th>
                         <th>Type</th>
-                        <th>repo</th>
+                        <th>Detail</th>
                         <th>Date</th>
                     </tr>
                     {%for event in events%}
                         <tr>
-                            <td>{{event.type}}</td>
                             <td><a href="/project/{{event.repo}}">{{event.repo}}</a></td>
+                            <td>{{event.branch}}</td>
+                            <td>{{event.type}}</td>
+                            <td>{{event.detail|safe}}</td>
                             <td>{{event.date}}</td>
                         </tr>
                     {% endfor%}

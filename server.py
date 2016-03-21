@@ -48,14 +48,7 @@ def user(username):
 
     user_obj['pic'] = data[0]['actor']['avatar_url']
 
-    events = []
-
-    for event in data:
-        event_obj = {}
-        event_obj['type'] = event['type']
-        event_obj['repo'] = event['repo']['name']
-        event_obj['date'] = event['created_at']
-        events.append(event_obj)
+    events = getUserEvents(data)
 
     return render_template("user.html", user=user_obj, events=events)
 

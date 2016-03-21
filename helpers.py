@@ -51,3 +51,44 @@ def insertUser(user):
     with open('smallgroup.json', 'w') as outfile:
         json.dump(data, outfile, sort_keys=True, indent=4, separators=(',', ': '))
     return True
+
+
+def getUserEvents(data):
+    events = []
+    for event in data:
+        event_obj = {}
+        event_obj['type'] = event['type']
+        event_obj['repo'] = event['repo']['name']
+        event_obj['date'] = event['created_at']
+
+        if event['type'] == "IssuesEvent":
+            event_obj['detail'] = event['payload']['issue']['title']
+            event_obj['branch'] = "N/A"
+
+        elif event['type'] == "PushEvent":
+            event_obj['branch'] = event['payload']['ref'].split("/")[-1]
+
+            commits = event['payload']['commits']
+            if len(commits) == 1:
+                event_obj['detail'] = commits[0]['message']
+
+            else:
+                log = "<ul>"
+                for commit in commits:
+                    log += "<li>%s</li>" % commit['message']
+
+                event_obj['detail'] = log + "</ul>"
+
+        elif event['type'] == "PullRequestEvent":
+            payload = event['payload']
+            pr = payload['pull_request']
+            event_obj['branch'] = "%s -> %s" % (pr['head']['label'], pr['base']['label'])
+            event_obj['detail'] = "<i>%s</i>: %s" % (payload['action'], pr['title'])
+
+        else:
+            event_obj['detail'] = "N/A"
+            event_obj['branch'] = "N/A"
+
+        events.append(event_obj)
+
+    return events
