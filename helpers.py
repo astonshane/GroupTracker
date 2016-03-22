@@ -53,6 +53,51 @@ def insertUser(user):
     return True
 
 
+def parseEvent(event):
+    event_obj = {}
+
+    if event['type'] == "IssuesEvent":
+        event_obj['detail'] = event['payload']['issue']['title']
+
+    elif event['type'] == "PushEvent":
+        event_obj['branch'] = event['payload']['ref'].split("/")[-1]
+
+        commits = event['payload']['commits']
+        if len(commits) == 1:
+            event_obj['detail'] = commits[0]['message']
+
+        else:
+            log = "<ul>"
+            for commit in commits:
+                log += "<li>%s</li>" % commit['message']
+
+            event_obj['detail'] = log + "</ul>"
+
+    elif event['type'] == "PullRequestEvent":
+        payload = event['payload']
+        pr = payload['pull_request']
+        event_obj['branch'] = "%s -> %s" % (pr['head']['label'], pr['base']['label'])
+        event_obj['detail'] = "<i>%s</i>: %s" % (payload['action'], pr['title'])
+
+    elif event['type'] == "CreateEvent":
+        payload = event['payload']
+        event_obj['detail'] = "<i>%s:</i> %s" % (payload['ref_type'], payload['ref'])
+
+    elif event['type'] == "ForkEvent":
+        event_obj['detail'] = event['payload']['forkee']['full_name']
+
+    elif event['type'] == "MemberEvent":
+        member = event['payload']['member']['login']
+        event_obj['detail'] = "Added <a href='/user/%s'>%s</a> to the Repository" % (member, member)
+
+    elif event['type'] == "DeleteEvent":
+        event_obj['detail'] = "<i>%s</i>: %s" % (event['payload']['ref_type'], event['payload']['ref'])
+
+    elif event['type'] == "IssueCommentEvent":
+        event_obj['detail'] = "<i>%s</i>: %s" % (event['payload']['issue']['title'], event['payload']['comment']['body'])
+    return event_obj
+
+
 def getUserEvents(username):
     data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events?per_page=100' % username).read())
     events = []
@@ -62,48 +107,9 @@ def getUserEvents(username):
         event_obj['repo'] = event['repo']['name']
         event_obj['date'] = event['created_at']
 
-        if event['type'] == "IssuesEvent":
-            event_obj['detail'] = event['payload']['issue']['title']
-
-        elif event['type'] == "PushEvent":
-            event_obj['branch'] = event['payload']['ref'].split("/")[-1]
-
-            commits = event['payload']['commits']
-            if len(commits) == 1:
-                event_obj['detail'] = commits[0]['message']
-
-            else:
-                log = "<ul>"
-                for commit in commits:
-                    log += "<li>%s</li>" % commit['message']
-
-                event_obj['detail'] = log + "</ul>"
-
-        elif event['type'] == "PullRequestEvent":
-            payload = event['payload']
-            pr = payload['pull_request']
-            event_obj['branch'] = "%s -> %s" % (pr['head']['label'], pr['base']['label'])
-            event_obj['detail'] = "<i>%s</i>: %s" % (payload['action'], pr['title'])
-
-        elif event['type'] == "CreateEvent":
-            payload = event['payload']
-            if payload['ref_type'] == "repository":
-                event_obj['detail'] = "<i>repo:</i> %s" % event_obj['repo']
-            else:
-                event_obj['detail'] = "<i>%s:</i> %s" % (payload['ref_type'], payload['ref'])
-
-        elif event['type'] == "ForkEvent":
-            event_obj['detail'] = event['payload']['forkee']['full_name']
-
-        elif event['type'] == "MemberEvent":
-            member = event['payload']['member']['login']
-            event_obj['detail'] = "Added <a href='/user/%s'>%s</a> to the Repository" % (member, member)
-
-        elif event['type'] == "DeleteEvent":
-            event_obj['detail'] = "<i>%s</i>: %s" % (event['payload']['ref_type'], event['payload']['ref'])
-
-        elif event['type'] == "IssueCommentEvent":
-            event_obj['detail'] = "<i>%s</i>: %s" % (event['payload']['issue']['title'], event['payload']['comment']['body'])
+        parsed = parseEvent(event)
+        for cat in parsed:
+            event_obj[cat] = parsed[cat]
 
         events.append(event_obj)
 
