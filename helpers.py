@@ -91,6 +91,12 @@ def getUserEvents(data):
             else:
                 event_obj['detail'] = "<i>%s:</i> %s" % (payload['ref_type'], payload['ref'])
 
+        elif event['type'] == "ForkEvent":
+            event_obj['detail'] = event['payload']['forkee']['full_name']
+
+        elif event['type'] == "MemberEvent":
+            member = event['payload']['member']['login']
+            event_obj['detail'] = "Added <a href='/user/%s'>%s</a> to the Repository" % (member, member)
 
         events.append(event_obj)
 
