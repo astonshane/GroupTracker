@@ -25,15 +25,20 @@
 
                 <table class="table table-striped">
                     <tr>
-                        <th>Type</th>
-                        <th>User</th>
                         <th>Date</th>
+                        <th>User</th>
+                        <th>Branch</th>
+                        <th>Type</th>
+                        <th>Detail</th>
+
                     </tr>
                     {%for event in events%}
                         <tr>
-                            <td>{{event.type}}</td>
-                            <td><a href="/user/{{event.user}}">{{event.user}}</a></td>
                             <td>{{event.date}}</td>
+                            <td><a href="/user/{{event.user}}">{{event.user}}</a></td>
+                            <td>{{event.branch}}</td>
+                            <td>{{event.type}}</td>
+                            <td>{{event.detail|safe}}</td>
                         </tr>
                     {% endfor%}
                 </table>

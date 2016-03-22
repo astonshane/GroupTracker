@@ -57,19 +57,13 @@ def user(username):
 def project(user, repo):
     project = getProject("%s/%s" % (user, repo))
     pprint(project)
-    events = []
 
     try:
         data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
     except:
         abort(404)
 
-    for event in data:
-        event_obj = {}
-        event_obj['type'] = event['type']
-        event_obj['user'] = event['actor']['login']
-        event_obj['date'] = event['created_at']
-        events.append(event_obj)
+    events = getProjectEvents("%s/%s" % (user, repo))
 
     return render_template("project.html", project=project, events=events)
 

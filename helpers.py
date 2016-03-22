@@ -100,8 +100,6 @@ def parseEvent(event):
 
 
 def getUserEvents(username):
-
-
     data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events?per_page=100' % username).read())
     events = []
     for event in data:
@@ -114,10 +112,33 @@ def getUserEvents(username):
         date_object = datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
         now = datetime.utcnow()
         two_weeks = timedelta(weeks=2)
-        print date_object, now - date_object, (now-date_object) < two_weeks
         if (now-date_object) < two_weeks:
             event_obj['date'] = date_object.strftime("%m/%d/%Y")
 
+            parsed = parseEvent(event)
+            for cat in parsed:
+                event_obj[cat] = parsed[cat]
+
+            events.append(event_obj)
+
+    return events
+
+def getProjectEvents(project):
+    data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/events?per_page=100' % (project)).read())
+
+    events = []
+
+    for event in data:
+        event_obj = {}
+        event_obj['type'] = event['type']
+        event_obj['user'] = event['actor']['login']
+        date = event['created_at']
+
+        date_object = datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
+        now = datetime.utcnow()
+        two_weeks = timedelta(weeks=2)
+        if (now-date_object) < two_weeks:
+            event_obj['date'] = date_object.strftime("%m/%d/%Y")
             parsed = parseEvent(event)
             for cat in parsed:
                 event_obj[cat] = parsed[cat]
