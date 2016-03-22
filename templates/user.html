@@ -32,23 +32,25 @@
                 {% endif %}
             </div>
             <div class="col-md-9">
-                <h2>Public Events ({{events|length}})</h2>
+                <h2>Public Events ({{events|length}}) <small>from last two weeks</small></h2>
 
                 <table class="table table-striped">
                     <tr>
+                        <th>Date</th>
                         <th>Repository</th>
                         <th>Branch</th>
                         <th>Type</th>
                         <th>Detail</th>
-                        <th>Date</th>
+
                     </tr>
                     {%for event in events%}
                         <tr>
+                            <td>{{event.date}}</td>
                             <td><a href="/project/{{event.repo}}">{{event.repo}}</a></td>
                             <td>{{event.branch}}</td>
                             <td>{{event.type}}</td>
                             <td>{{event.detail|safe}}</td>
-                            <td>{{event.date}}</td>
+
                         </tr>
                     {% endfor%}
                 </table>
