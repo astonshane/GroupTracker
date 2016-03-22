@@ -99,9 +99,11 @@ def parseEvent(event):
     return event_obj
 
 
-def getUserEvents(username):
-    data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events?per_page=100' % username).read())
+def getUserEvents(username, github):
+    data = github.get("users/%s/events?per_page=100" % username)
+
     events = []
+
     for event in data:
         event_obj = {}
         event_obj['type'] = event['type']
@@ -123,8 +125,9 @@ def getUserEvents(username):
 
     return events
 
-def getProjectEvents(project):
-    data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/events?per_page=100' % (project)).read())
+
+def getProjectEvents(project, github):
+    data = github.get("repos/%s/events?per_page=100" % project)
 
     events = []
 

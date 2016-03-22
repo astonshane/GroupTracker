@@ -151,7 +151,7 @@ def index():
 @app.route("/user/<username>")
 def user(username):
     try:
-        data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events' % username).read())
+        data = github.get('users/%s/events' % username)
     except:
         abort(404)
 
@@ -169,7 +169,7 @@ def user(username):
 
     user_obj['pic'] = data[0]['actor']['avatar_url']
 
-    events = getUserEvents(username)
+    events = getUserEvents(username, github)
 
     return render_template("user.html", user=user_obj, events=events)
 
@@ -180,11 +180,11 @@ def project(user, repo):
     pprint(project)
 
     try:
-        data = json.loads(urllib2.urlopen('https://api.github.com/repos/%s/%s/events' % (user, repo)).read())
+        data = github.get('repos/%s/%s/events' % (user, repo))
     except:
         abort(404)
 
-    events = getProjectEvents("%s/%s" % (user, repo))
+    events = getProjectEvents("%s/%s" % (user, repo), github)
 
     return render_template("project.html", project=project, events=events)
 
