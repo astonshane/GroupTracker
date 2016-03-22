@@ -53,7 +53,8 @@ def insertUser(user):
     return True
 
 
-def getUserEvents(data):
+def getUserEvents(username):
+    data = json.loads(urllib2.urlopen('https://api.github.com/users/%s/events?per_page=100' % username).read())
     events = []
     for event in data:
         event_obj = {}
@@ -97,6 +98,12 @@ def getUserEvents(data):
         elif event['type'] == "MemberEvent":
             member = event['payload']['member']['login']
             event_obj['detail'] = "Added <a href='/user/%s'>%s</a> to the Repository" % (member, member)
+
+        elif event['type'] == "DeleteEvent":
+            event_obj['detail'] = "<i>%s</i>: %s" % (event['payload']['ref_type'], event['payload']['ref'])
+
+        elif event['type'] == "IssueCommentEvent":
+            event_obj['detail'] = "<i>%s</i>: %s" % (event['payload']['issue']['title'], event['payload']['comment']['body'])
 
         events.append(event_obj)
 
