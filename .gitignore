@@ -63,3 +63,4 @@ target/
 
 config.json
 example.py
+venv/

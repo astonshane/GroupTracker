@@ -1,10 +1,3 @@
-"""
-    GitHub Example
-    --------------
-
-    Shows how to authorize users with Github.
-
-"""
 from flask import Flask, request, g, session, redirect, url_for, render_template, abort
 from flask import render_template_string
 from flask.ext.github import GitHub
