@@ -64,3 +64,4 @@ target/
 config.json
 example.py
 venv/
+bower_components/

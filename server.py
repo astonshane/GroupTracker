@@ -138,7 +138,7 @@ def index():
             return redirect("/")
 
     g.users, g.projects = parseGroups()
-    return render_template("userlist.html", form=form)
+    return render_template("index.html", form=form)
 
 
 @app.route("/user/<username>")
