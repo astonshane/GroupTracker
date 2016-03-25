@@ -95,10 +95,7 @@ def authorized(access_token):
 
 @app.route('/login')
 def login():
-    if session.get('user_id', None) is None:
-        return github.authorize()
-    else:
-        return 'Already logged in'
+    return github.authorize()
 
 
 @app.route('/logout')
