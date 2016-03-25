@@ -25,8 +25,8 @@ GITHUB_CLIENT_SECRET = 'YYY'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-app.config['GITHUB_CLIENT_ID'] = os.environ['GITHUB_CLIENT_ID']
-app.config['GITHUB_CLIENT_SECRET'] = os.environ['GITHUB_CLIENT_SECRET']
+app.config['GITHUB_CLIENT_ID'] = os.environ.get('GITHUB_CLIENT_ID', "")
+app.config['GITHUB_CLIENT_SECRET'] = os.environ.get('GITHUB_CLIENT_SECRET', "")
 
 # setup github-flask
 github = GitHub(app)
@@ -186,4 +186,5 @@ def page_not_found(error):
 
 if __name__ == '__main__':
     init_db()
-    app.run(debug=True, host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(debug=True, host="0.0.0.0", port=port)
