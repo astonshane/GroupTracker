@@ -2,6 +2,15 @@
 
 {% block title %}Project Page{% endblock %}
 
+{% block links %}
+<style type="text/css">
+  th[data-sort]{
+    cursor:pointer;
+  }
+
+</style>
+{% endblock %}
+
 {% block body %}
 
     <div class="container">
@@ -24,14 +33,16 @@
                 <h2>Public Events ({{events|length}})</h2>
 
                 <table class="table table-striped">
+                  <thead>
                     <tr>
-                        <th>Date</th>
-                        <th>User</th>
-                        <th>Branch</th>
-                        <th>Type</th>
+                        <th data-sort="string">Date</th>
+                        <th data-sort="string">User</th>
+                        <th data-sort="string">Branch</th>
+                        <th data-sort="string">Type</th>
                         <th>Detail</th>
-
                     </tr>
+                  </thead>
+                  <tbody>
                     {%for event in events%}
                         <tr>
                             <td>{{event.date}}</td>
@@ -41,8 +52,19 @@
                             <td>{{event.detail|safe}}</td>
                         </tr>
                     {% endfor%}
+                  </tbody>
                 </table>
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block postscript %}
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/stupidtable/0.0.1/stupidtable.min.js"></script>
+<script>
+$(function(){
+    $("table").stupidtable();
+});
+</script>
 {% endblock %}

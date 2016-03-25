@@ -68,17 +68,6 @@ def after_request(response):
     return response
 
 
-@app.route('/tmp')
-def index2():
-    if g.user:
-        t = 'Hello! <a href="{{ url_for("user") }}">Get user</a> ' \
-            '<a href="{{ url_for("logout") }}">Logout</a>'
-    else:
-        t = 'Hello! <a href="{{ url_for("login") }}">Login</a>'
-
-    return render_template_string(t)
-
-
 @github.access_token_getter
 def token_getter():
     user = g.user
@@ -118,13 +107,17 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/user')
-def user2():
-    return str(github.get('repos/astonshane/GroupTracker/events'))
+@app.route('/request_login')
+def requestLogin():
+    if g.user:
+        return redirect(url_for("index"))
+    return render_template("request_login.html")
 
 
 @app.route("/", methods=('GET', 'POST'))
 def index():
+    if not g.user:
+        return redirect(url_for("requestLogin"))
     form = AddUser(request.form)
     if request.method == 'POST' and form.validate():
         user = {
@@ -143,6 +136,8 @@ def index():
 
 @app.route("/user/<username>")
 def user(username):
+    if not g.user:
+        return redirect(url_for("requestLogin"))
     try:
         data = github.get('users/%s/events' % username)
     except:
@@ -169,6 +164,8 @@ def user(username):
 
 @app.route("/project/<user>/<repo>")
 def project(user, repo):
+    if not g.user:
+        return redirect(url_for("requestLogin"))
     project = getProject("%s/%s" % (user, repo))
     pprint(project)
 
