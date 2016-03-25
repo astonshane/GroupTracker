@@ -118,7 +118,8 @@ def index():
     form = AddUser(request.form)
     if request.method == 'POST' and form.validate():
         user = {
-            "name": "%s %s" % (request.form['fname'], request.form['lname']),
+            "fname": request.form['fname'],
+            "lname":  request.form['lname'],
             "email": request.form['email'],
             "project": request.form['project'],
             "github": request.form['github'],

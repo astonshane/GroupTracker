@@ -21,7 +21,8 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th data-sort="string">Name</th>
+                            <th data-sort="string">First Name</th>
+                            <th data-sort="string">Last Name</th>
                             <th data-sort="string">Email</th>
                             <th data-sort="string">Account</th>
                             <th data-sort="string">Project</th>
@@ -30,10 +31,11 @@
                     <tbody>
                         {%for user in g.users%}
                             <tr>
-                                <td><a href="https://rcos.io/users/{{user['rcosio']}}/profile">{{user['name']}}</a></td>
-                                <td><a href="mailto:{{user['email']}}">{{user['email']}}</a></td>
-                                <td><a href="/user/{{user['github']}}">{{user['github']}}</td>
-                                <td><a href="/project/{{user['project']}}">{{user['project']}}</td>
+                                <td><a href="https://rcos.io/users/{{user['rcosio']}}/profile">{{user.fname}}</a></td>
+                                <td>{{user.lname}}</a></td>
+                                <td><a href="mailto:{{user['email']}}">{{user.email}}</a></td>
+                                <td><a href="/user/{{user['github']}}">{{user.github}}</td>
+                                <td><a href="/project/{{user['project']}}">{{user.project}}</td>
                             </tr>
                         {% endfor%}
                     </tbody>

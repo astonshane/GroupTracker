@@ -22,7 +22,7 @@
                 <h2>Project Members</h2>
                 <div class="list-group">
                     {% for member in project.users %}
-                        <a href="/user/{{member.github}}" class="list-group-item">{{member.name}}</a>
+                        <a href="/user/{{member.github}}" class="list-group-item">{{member.fname}} {{member.lname}}</a>
                     {% endfor %}
                 </div>
             </div>
