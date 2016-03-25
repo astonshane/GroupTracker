@@ -8,6 +8,7 @@ from sqlalchemy.ext.declarative import declarative_base
 
 import json
 import urllib2
+import os
 from pprint import pprint
 from forms import AddUser
 from helpers import *
@@ -24,9 +25,8 @@ GITHUB_CLIENT_SECRET = 'YYY'
 app = Flask(__name__)
 app.config.from_object(__name__)
 
-config = json.loads(open('config.json').read())
-app.config['GITHUB_CLIENT_ID'] = config['GITHUB_CLIENT_ID']
-app.config['GITHUB_CLIENT_SECRET'] = config['GITHUB_CLIENT_SECRET']
+app.config['GITHUB_CLIENT_ID'] = os.environ['GITHUB_CLIENT_ID']
+app.config['GITHUB_CLIENT_SECRET'] = os.environ['GITHUB_CLIENT_SECRET']
 
 # setup github-flask
 github = GitHub(app)
