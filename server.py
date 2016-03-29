@@ -10,7 +10,7 @@ import json
 import urllib2
 import os
 from pprint import pprint
-from forms import AddUser, PickSmallGroup
+from forms import AddUser, PickSmallGroup, getSmallGroups
 from helpers import *
 
 DATABASE_URI = 'sqlite:////tmp/github-flask.db'
@@ -117,12 +117,34 @@ def selectSmallGroup():
         return redirect(url_for("requestLogin"))
 
     form = PickSmallGroup(request.form)
+    form.small_group.choices = getSmallGroups()
     if request.method == 'POST' and form.validate():
         session['small_group'] = request.form['small_group']
         session.modified = True
         return redirect(url_for("index"))
 
     return render_template("select_smallgroup.html", form=form)
+
+
+@app.route('/newsmallgroup', methods=['POST'])
+def newSmallGroup():
+    print "HERE", request.form['title']
+    if request.form['title'] != "":
+        print "SUCCESS"
+        new_title = request.form['title']
+        data = json.loads(open('smallgroups.json').read())
+        for group in data.get("groups", []):
+            if group['title'] == new_title:
+                flash("There is already a smallgroup with this name!", "error")
+                return redirect(url_for("selectSmallGroup"))
+        new_group = {"title": new_title, "users": []}
+        data['groups'].append(new_group)
+        with open('smallgroups.json', 'w') as outfile:
+            json.dump(data, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+    else:
+        flash("Must enter a group name!", "error")
+    return redirect(url_for("selectSmallGroup"))
 
 
 @app.route("/", methods=('GET', 'POST'))

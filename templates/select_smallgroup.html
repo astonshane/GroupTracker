@@ -14,19 +14,33 @@
 {% block body %}
   <div class="container">
     <p></p>
-    <h2>Select a Small Group</h2>
-    <form class="form-inline" method="POST" action="/selectsmallgroup">
-        {{form.small_group}}
-        {% if form.small_group.errors %}
-            <ul class="errors">
-                {% for error in form.small_group.errors %}
-                    <li>{{ error }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-        <input type="submit" class="btn btn-primary" value="Select Group">
-    </form>
+    <div class"row">
+      <div class="col-md-8">
+        <h2>Select a Small Group</h2>
+        <form class="form-inline" method="POST" action="/selectsmallgroup">
+            {{form.small_group}}
+            {% if form.small_group.errors %}
+                <ul class="errors">
+                    {% for error in form.small_group.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <input type="submit" class="btn btn-primary" value="Select Group">
+        </form>
+      </div>
+      <div class="col-md-4">
+        <h2>Create New Small Group</h2>
+        <form class="form-inline" method="POST" action="/newsmallgroup">
+          <input type="text" class="form-control" placeholder="Group Name" name="title">
+          <input type="submit" class="btn btn-success" value="Add Group">
+        </form>
+      </div>
+    </div>
+
   </div>
+
+
 
 {% endblock %}
 
