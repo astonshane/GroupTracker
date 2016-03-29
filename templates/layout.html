@@ -25,7 +25,9 @@
           <a class="navbar-brand" href="/">Small Group Tracker</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-
+          <ul class="nav navbar-nav">
+            <li><a href="/selectsmallgroup">Change Small Group</a></li>
+            </ul>
           <ul id="logList" class="nav navbar-nav navbar-right">
             {% if g.user %}
               <li id="liButton"><a href="{{ url_for("logout") }}">Logout</a></li>

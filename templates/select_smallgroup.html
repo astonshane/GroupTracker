@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+
+{% block title %}Small Group Tracker{% endblock %}
+
+{% block links %}
+<style type="text/css">
+  th[data-sort]{
+    cursor:pointer;
+  }
+
+</style>
+{% endblock %}
+
+{% block body %}
+  <div class="container">
+    <p></p>
+    <h2>Select a Small Group</h2>
+    <form class="form-inline" method="POST" action="/selectsmallgroup">
+        {{form.small_group}}
+        {% if form.small_group.errors %}
+            <ul class="errors">
+                {% for error in form.small_group.errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <input type="submit" class="btn btn-primary" value="Select Group">
+    </form>
+  </div>
+
+{% endblock %}
+
+
+{% block postscript %}
+{% endblock %}

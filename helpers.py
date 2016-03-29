@@ -1,4 +1,4 @@
-from flask import Flask, render_template, g, abort, request, flash
+from flask import Flask, render_template, g, abort, request, flash, session
 import json
 import urllib2
 from pprint import pprint
@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 
 
 def parseGroups():
-    data = json.loads(open('smallgroup.json').read())
+    data = json.loads(open('smallgroups/%s' % session.get('small_group')).read())
 
     users = []
     projects = set()
@@ -15,7 +15,7 @@ def parseGroups():
         users.append(user)
         projects.add(user['project'])
 
-    return users, projects
+    return users, projects, data.get("title", "no_title")
 
 
 def getUser(username):

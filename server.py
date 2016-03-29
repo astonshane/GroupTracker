@@ -10,7 +10,7 @@ import json
 import urllib2
 import os
 from pprint import pprint
-from forms import AddUser
+from forms import AddUser, PickSmallGroup
 from helpers import *
 
 DATABASE_URI = 'sqlite:////tmp/github-flask.db'
@@ -111,6 +111,20 @@ def requestLogin():
     return render_template("request_login.html")
 
 
+@app.route('/selectsmallgroup', methods=('GET', 'POST'))
+def selectSmallGroup():
+    if not g.user:
+        return redirect(url_for("requestLogin"))
+
+    form = PickSmallGroup(request.form)
+    if request.method == 'POST' and form.validate():
+        session['small_group'] = request.form['small_group']
+        session.modified = True
+        return redirect(url_for("index"))
+
+    return render_template("select_smallgroup.html", form=form)
+
+
 @app.route("/", methods=('GET', 'POST'))
 def index():
     if not g.user:
@@ -128,7 +142,7 @@ def index():
         if insertUser(user):
             return redirect("/")
 
-    g.users, g.projects = parseGroups()
+    g.users, g.projects, g.title = parseGroups()
     return render_template("index.html", form=form)
 
 

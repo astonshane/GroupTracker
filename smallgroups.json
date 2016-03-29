@@ -1,0 +1,44 @@
+{
+    "groups": [
+        {
+            "title": "test1",
+            "users": [
+                {
+                    "email": "astons@rpi.edu",
+                    "fname": "Shane ",
+                    "github": "astonshane",
+                    "lname": "Aston",
+                    "project": "astonshane/GroupTracker",
+                    "rcosio": "55e35b3bd20d829034ef0be5"
+                }
+            ]
+        },
+        {
+            "title": "test2",
+            "users": [
+                {
+                    "email": "astons@rpi.edu",
+                    "fname": "Shane ",
+                    "github": "astonshane",
+                    "lname": "Aston",
+                    "project": "astonshane/GroupTracker",
+                    "rcosio": "55e35b3bd20d829034ef0be5"
+                }
+            ]
+        },
+        {
+            "title": "test3",
+            "users": [
+                {
+                    "email": "astons@rpi.edu",
+                    "fname": "Shane ",
+                    "github": "astonshane",
+                    "lname": "Aston",
+                    "project": "astonshane/GroupTracker",
+                    "rcosio": "55e35b3bd20d829034ef0be5"
+                }
+            ]
+        }
+
+    ]
+}

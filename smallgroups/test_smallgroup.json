@@ -1,0 +1,21 @@
+{
+    "title": "test_smallgroup",
+    "users": [
+        {
+            "email": "hosiem@rpi.edu",
+            "fname": "Michael",
+            "github": "hosier",
+            "lname": "Hosier",
+            "project": "hosier/free-of-charge",
+            "rcosio": "55e60539898324db13adb798"
+        },
+        {
+            "email": "astons@rpi.edu",
+            "fname": "Shane ",
+            "github": "astonshane",
+            "lname": "Aston",
+            "project": "astonshane/GroupTracker",
+            "rcosio": "55e35b3bd20d829034ef0be5"
+        }
+    ]
+}
