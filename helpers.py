@@ -7,7 +7,6 @@ from datetime import datetime, timedelta
 
 def parseGroups():
     smallgroup = session.get('small_group')
-    print "smallgroup", smallgroup
     data = json.loads(open('smallgroups.json').read())
 
     users = []
@@ -25,38 +24,48 @@ def parseGroups():
 
 
 def getUser(username):
-    data = json.loads(open('smallgroup.json').read())
-    for user in data.get("users", {}):
-        if user['github'].lower() == username.lower():
-            return user
+    data = json.loads(open('smallgroups.json').read())
+    for group in data.get("groups", []):
+        for user in group.get("users", {}):
+            if user['github'].lower() == username.lower():
+                return user
     return None
 
 
 def getProject(projectname):
-    data = json.loads(open('smallgroup.json').read())
+    data = json.loads(open('smallgroups.json').read())
 
     project = {"name": projectname, "RCOS": False, "users": []}
 
-    for user in data.get("users", {}):
-        if user['project'].lower() == projectname.lower():
-            project['users'].append(user)
-            project['RCOS'] = True
+    for group in data.get("groups", []):
+        for user in group.get("users", {}):
+            if user['project'].lower() == projectname.lower():
+                project['users'].append(user)
+                project['RCOS'] = True
 
     return project
 
 
 def insertUser(user):
-    data = json.loads(open('smallgroup.json').read())
-    for user2 in data.get("users", {}):
-        if user['github'] == user2['github']:
-            flash("Already have a user with this Github id!", "error")
-            return False
-        if user['email'] == user2['email']:
-            flash("Already have a user with this email!", "error")
-    data['users'].append(user)
+    current_smallgroup = session.get("small_group")
+    new_data = {"groups": []}
+    data = json.loads(open('smallgroups.json').read())
+    for group in data.get("groups", []):
+        if group['title'] == current_smallgroup:
+            members = group.get("users", [])
+            for user2 in group.get("users", {}):
+                if user['github'] == user2['github']:
+                    flash("Already have a user with this Github id!", "error")
+                    return False
+                if user['email'] == user2['email']:
+                    flash("Already have a user with this email!", "error")
+                    return False
+            members.append(user)
+            group['users'] = members
+        new_data['groups'].append(group)
 
-    with open('smallgroup.json', 'w') as outfile:
-        json.dump(data, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+    with open('smallgroups.json', 'w') as outfile:
+        json.dump(new_data, outfile, sort_keys=True, indent=4, separators=(',', ': '))
     return True
 
 
