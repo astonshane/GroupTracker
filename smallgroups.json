@@ -100,57 +100,6 @@
                     "rcosio": "56ab81f34bd5283e023af79c"
                 }
             ]
-        },
-        {
-            "title": "test2",
-            "users": [
-                {
-                    "email": "astons@rpi.edu",
-                    "fname": "Shane ",
-                    "github": "astonshane",
-                    "lname": "Aston",
-                    "project": "astonshane/GroupTracker",
-                    "rcosio": "55e35b3bd20d829034ef0be5"
-                },
-                {
-                    "email": "hosiem@rpi.edu",
-                    "fname": "Michael",
-                    "github": "hosier",
-                    "lname": "Hosier",
-                    "project": "hosier/free-of-charge",
-                    "rcosio": "55e60539898324db13adb798"
-                }
-            ]
-        },
-        {
-            "title": "test3",
-            "users": [
-                {
-                    "email": "astons@rpi.edu",
-                    "fname": "Shane ",
-                    "github": "astonshane",
-                    "lname": "Aston",
-                    "project": "astonshane/GroupTracker",
-                    "rcosio": "55e35b3bd20d829034ef0be5"
-                }
-            ]
-        },
-        {
-            "title": "test test test",
-            "users": [
-                {
-                    "email": "astonshane@gmail.com",
-                    "fname": "Shane",
-                    "github": "astonshane",
-                    "lname": "Aston",
-                    "project": "astonshane/davisputnam",
-                    "rcosio": "alkjdsf"
-                }
-            ]
-        },
-        {
-            "title": "testing again",
-            "users": []
         }
     ]
 }
