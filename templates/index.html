@@ -27,6 +27,7 @@
                             <th data-sort="string">Email</th>
                             <th data-sort="string">Account</th>
                             <th data-sort="string">Project</th>
+                            <th>Remove</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,6 +41,7 @@
                                 <td><a href="mailto:{{user['email']}}">{{user.email}}</a></td>
                                 <td><a href="/user/{{user['github']}}">{{user.github}}</td>
                                 <td><a href="/project/{{user['project']}}">{{user.project}}</td>
+                                <td><a href="/remove/{{user.github}}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a></td>
                             </tr>
                         {% endfor%}
                     </tbody>

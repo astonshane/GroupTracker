@@ -111,6 +111,11 @@ def requestLogin():
     return render_template("request_login.html")
 
 
+@app.route('/export')
+def export():
+    return str(json.loads(open('smallgroups.json').read()))
+
+
 @app.route('/selectsmallgroup', methods=('GET', 'POST'))
 def selectSmallGroup():
     if not g.user:
@@ -213,6 +218,28 @@ def project(user, repo):
     events = getProjectEvents("%s/%s" % (user, repo), github)
 
     return render_template("project.html", project=project, events=events)
+
+
+@app.route("/remove/<github>")
+def removeUser(github):
+    smallgroup = session.get("small_group")
+    data = json.loads(open('smallgroups.json').read())
+    new_groups = []
+    for group in data.get("groups", []):
+        if group['title'] == smallgroup:
+            new_users = []
+            for user in group['users']:
+                if user['github'] != github:
+                    new_users.append(user)
+            group['users'] = new_users
+        new_groups.append(group)
+    data['groups'] = new_groups
+
+    with open('smallgroups.json', 'w') as outfile:
+        json.dump(data, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+    return redirect(url_for("index"))
+
 
 
 @app.errorhandler(404)
