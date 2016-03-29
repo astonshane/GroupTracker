@@ -6,16 +6,22 @@ from datetime import datetime, timedelta
 
 
 def parseGroups():
-    data = json.loads(open('smallgroups/%s' % session.get('small_group')).read())
+    smallgroup = session.get('small_group')
+    print "smallgroup", smallgroup
+    data = json.loads(open('smallgroups.json').read())
 
     users = []
     projects = set()
 
-    for user in data.get("users", {}):
-        users.append(user)
-        projects.add(user['project'])
+    for group in data.get("groups", []):
+        print "group", group['title']
+        if group['title'] == smallgroup:
+            for user in group.get("users", {}):
+                users.append(user)
+                projects.add(user['project'])
+            break
 
-    return users, projects, data.get("title", "no_title")
+    return users, projects, smallgroup
 
 
 def getUser(username):

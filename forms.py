@@ -5,10 +5,10 @@ import json
 
 def getSmallGroups():
     smallgroups = []
-    files = os.listdir("smallgroups/")
-    for smallgroup in files:
-        data = json.loads(open('smallgroups/%s' % smallgroup).read())
-        smallgroups.append((smallgroup, data.get('title', 'no-title')))
+    data = json.loads(open('smallgroups.json').read())
+    for group in data.get('groups', []):
+        title = group.get('title', 'no-title')
+        smallgroups.append((title, title))
 
     return smallgroups
 

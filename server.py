@@ -129,6 +129,8 @@ def selectSmallGroup():
 def index():
     if not g.user:
         return redirect(url_for("requestLogin"))
+    if session.get('small_group', None) is None:
+        return redirect(url_for("selectSmallGroup"))
     form = AddUser(request.form)
     if request.method == 'POST' and form.validate():
         user = {
